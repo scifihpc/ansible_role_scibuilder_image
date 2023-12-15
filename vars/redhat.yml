@@ -1,0 +1,38 @@
+---
+
+scibuilder_packages:
+  - Lmod
+  - bash-completion
+  - cmake
+  - curl-minimal
+  - diffutils
+  - gcc
+  - gcc-c++
+  - git
+  - gmp-devel
+  - gnupg
+  - kernel
+  - kernel-headers
+  - kernel-devel
+  - libarchive
+  - libffi-devel
+  - libnl3
+  - libnl3-devel
+  - libuuid-devel
+  - m4
+  - make
+  - openssh
+  - openssl-devel
+  - perl
+  - python39
+  - platform-python-devel
+  - rsync
+  - rust
+  - shadow-utils
+  - squashfs-tools
+  - tcl
+  - unzip
+  - wget
+  - which
+
+kernel_check_cmd: "rpm -qa | grep kernel-headers | cut -f 3- -d '-'"

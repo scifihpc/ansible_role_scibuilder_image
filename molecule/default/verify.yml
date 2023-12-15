@@ -1,0 +1,36 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check fake kernel version
+      ansible.builtin.command:
+        cmd: cat /etc/fake-kernel
+      register: fake_kernel_check
+      changed_when: fake_kernel_check.rc != 0
+
+    - name: Check uname output
+      ansible.builtin.command:
+        cmd: /usr/bin/uname -r
+      register: uname_check
+      changed_when: uname_check.rc != 0
+
+    - name: Check real uname output
+      ansible.builtin.command:
+        cmd: /usr/bin/uname-bin -r
+      register: uname_bin_check
+      changed_when: uname_bin_check.rc != 0
+
+    - name: Print fake kernel version
+      ansible.builtin.debug:
+        msg: "{{ uname_check.stdout }}"
+
+    - name: Print real kernel version
+      ansible.builtin.debug:
+        msg: "{{ uname_bin_check.stdout }}"
+
+    - name: Assert that fake kernel and uname output match
+      ansible.builtin.assert:
+        that: fake_kernel_check.stdout == uname_check.stdout

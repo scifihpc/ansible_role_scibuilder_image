@@ -1,0 +1,6 @@
+---
+# vars file for ansible_role_scibuilder_image
+
+scibuilder_packages: []
+
+kernel_check_cmd: "uname -r"

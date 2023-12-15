@@ -1,0 +1,34 @@
+---
+# tasks file for ansible_role_scibuilder_image
+
+- name: Load variables
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ ansible_os_family | lower }}.yml'
+        - main.yml
+      paths:
+        - 'vars'
+
+- name: Include RedHat specific tasks
+  ansible.builtin.include_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Capture installed kernel version
+  ansible.builtin.shell:
+    cmd: "{{ kernel_check_cmd }} > /etc/fake-kernel"
+    creates: /etc/fake-kernel
+
+- name: Move uname to uname-bin
+  ansible.builtin.command:
+    cmd: mv /usr/bin/uname /usr/bin/uname-bin
+    creates: /usr/bin/uname-bin
+
+- name: Copy uname wrapper
+  ansible.builtin.copy:
+    src: files/uname-wrapper.sh
+    dest: /usr/bin/uname
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx

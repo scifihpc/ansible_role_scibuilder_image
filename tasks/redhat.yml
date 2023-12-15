@@ -1,0 +1,21 @@
+---
+
+- name: Enable EPEL
+  ansible.builtin.dnf:
+    name: 'epel-release'
+    state: present
+
+- name: Enable development tools
+  ansible.builtin.dnf:
+    name: '@Development tools'
+    state: present
+
+- name: Install other packages
+  ansible.builtin.dnf:
+    name: '{{ scibuilder_packages }}'
+    state: present
+
+- name: Install nodejs
+  ansible.builtin.dnf:
+    name: 'nodejs'
+    state: present
