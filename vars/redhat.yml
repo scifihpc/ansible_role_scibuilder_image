@@ -11,9 +11,9 @@ scibuilder_packages:
   - git
   - gmp-devel
   - gnupg
-  - kernel
-  - kernel-headers
-  - kernel-devel
+  - kernel-{{ kernel_version }}
+  - kernel-headers-{{ kernel_version }}
+  - kernel-devel-{{ kernel_version }}
   - libarchive
   - libffi-devel
   - libnl3
@@ -35,4 +35,4 @@ scibuilder_packages:
   - wget
   - which
 
-kernel_check_cmd: "rpm -qa | grep kernel-headers | cut -f 3- -d '-'"
+kernel_check_cmd: "rpm -q kernel-modules | sort | head -n1 | cut -f 3- -d '-'"

@@ -10,6 +10,12 @@
     name: '@Development tools'
     state: present
 
+- name: Install kernel headers
+  ansible.builtin.dnf:
+    name:
+      - "kernel-headers-{{ kernel_version }}"
+    state: present
+
 - name: Install other packages
   ansible.builtin.dnf:
     name: '{{ scibuilder_packages }}'

@@ -8,6 +8,10 @@
         src: /etc/hosts
         dest: /tmp/hosts-from-controller
         mode: "0644"
+    - name: "Install kernel modules"
+      ansible.builtin.package:
+        name: "{{ kernel_package }}"
+        state: present
     - name: "Include aaltoscicomp.ansible_role_scibuilder_image"
       ansible.builtin.include_role:
         name: "aaltoscicomp.ansible_role_scibuilder_image"

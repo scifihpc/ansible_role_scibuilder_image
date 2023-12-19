@@ -4,10 +4,14 @@ dependency:
 driver:
   name: podman
 platforms:
-  - name: builder
+  - name: rocky9_build_image
     image: rockylinux/rockylinux:9-ubi
     pre_build_image: true
 provisioner:
   name: ansible
+  inventory:
+    host_vars:
+      rocky9_build_image:
+        kernel_package: kernel-modules
 verifier:
   name: ansible

@@ -1,0 +1,6 @@
+---
+
+profile: basic
+
+warn_list:
+  - command-instead-of-shell

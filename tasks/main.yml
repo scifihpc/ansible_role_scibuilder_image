@@ -11,14 +11,34 @@
       paths:
         - 'vars'
 
+- name: Capture installed kernel version
+  ansible.builtin.shell:
+    cmd: "{{ kernel_check_cmd }}"
+  register: kernel_check
+  changed_when: kernel_check.rc != 0
+
+- name: Set kernel version as a fact
+  ansible.builtin.set_fact:
+    kernel_version: "{{ kernel_check.stdout | replace('\n','') }}"
+
+- name: Print kernel version
+  ansible.builtin.debug:
+    msg:
+      - "{{ kernel_version }}"
+
+- name: Set fake kernel file
+  ansible.builtin.lineinfile:
+    path: /etc/fake-kernel
+    state: present
+    create: true
+    line: "{{ kernel_version }}"
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Include RedHat specific tasks
   ansible.builtin.include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
-
-- name: Capture installed kernel version
-  ansible.builtin.shell:
-    cmd: "{{ kernel_check_cmd }} > /etc/fake-kernel"
-    creates: /etc/fake-kernel
 
 - name: Move uname to uname-bin
   ansible.builtin.command:
