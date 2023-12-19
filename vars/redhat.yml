@@ -26,6 +26,7 @@ scibuilder_packages:
   - perl
   - python39
   - platform-python-devel
+  - rdma-core-devel
   - rsync
   - rust
   - shadow-utils
