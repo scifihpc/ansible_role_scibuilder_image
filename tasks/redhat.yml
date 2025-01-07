@@ -15,6 +15,7 @@
     name:
       - "kernel-devel-{{ kernel_version }}"
       - "kernel-headers-{{ kernel_version }}"
+      - "kernel-tools-{{ kernel_version }}"
     state: present
 
 - name: Install other packages
