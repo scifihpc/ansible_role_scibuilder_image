@@ -13,6 +13,7 @@
 - name: Install kernel headers
   ansible.builtin.dnf:
     name:
+      - "kernel-devel-{{ kernel_version }}"
       - "kernel-headers-{{ kernel_version }}"
     state: present
 
